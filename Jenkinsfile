@@ -27,7 +27,7 @@ pipeline {
 	stage('Push to Docker Hub') {
     		steps {
         		echo 'Pushing Docker image to Docker Hub...'
-        		sh 'docker push youssefhalleb/mon-node-app'
+        		sh 'docker push youssefhalleb/mon-node-app:latest'
    			 }
 		}
 
