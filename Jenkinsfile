@@ -15,16 +15,22 @@ pipeline {
             }
         }
 
-        // Stage 3: Deploy
-        stage('Deploy') {
-            steps {
-                script {
-                    echo 'Deploying the application...'
-                    // Ajoutez ici vos commandes pour déployer l'application
-                    // Par exemple : sh 'docker-compose up' ou des scripts de déploiement
-                }
-            }
+         stage('Login to Docker Hub') {
+    		steps {
+       			 echo 'Logging into Docker Hub...'
+       			 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+           		 sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
         }
+    }
+}
+
+	stage('Push to Docker Hub') {
+    		steps {
+        		echo 'Pushing Docker image to Docker Hub...'
+        		sh 'docker push YoussefHalleb/mon-node-app'
+   			 }
+		}
+
     }
 }
  
